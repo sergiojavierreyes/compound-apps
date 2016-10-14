@@ -16,13 +16,17 @@ let prettyNr = (number) => {
 }
 
 
-//function to calculate compound interest from a customer object
-var calcCompound = (customer) => {
-	// Read the customer data json
+var callMe = function() {
+// Read the customer data json
 fs.readFile(__dirname + "/customer.json", "utf8", (err,data)=>{
-	//parse the file to a readable object
+//parse the file to a readable object
 	let parsedData = JSON.parse(data)
 	calcCompound(parsedData)
+})
+}
+
+//function to calculate compound interest from a customer object
+var calcCompound = (customer) => {
 
 	//Set end amount prop and calculate total duration
 	customer.pension.endamount = {
@@ -42,7 +46,6 @@ fs.readFile(__dirname + "/customer.json", "utf8", (err,data)=>{
 		customer.pension.endamount.average *= 		(customer.pension.interest.average)
 		customer.pension.endamount.optimistic *= 	(customer.pension.interest.optimistic)
 
-	})
 	}
 		//output our data
 		console.log("Welcome " + customer.name + 	" to our advanced pension planner!")
@@ -55,4 +58,5 @@ fs.readFile(__dirname + "/customer.json", "utf8", (err,data)=>{
 		console.log("In a optimistic scenario: $" + 	prettyNr(customer.pension.endamount.optimistic))
 	}
 
-	module.exports = calcCompound
+
+	module.exports = callMe	
