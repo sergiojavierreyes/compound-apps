@@ -1,6 +1,21 @@
 //importing necessary modules
 const fs = require ('fs')
 
+//Helper functions
+
+let roundDecimal = (number) => {
+	return Math.round(number *100) / 100
+}
+
+let addCommas = (number) => {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+}
+
+let prettyNr = (number) => {
+	return addCommas(roundDecimal(number))
+}
+
+
 // Read the customer data json
 fs.readFile(__dirname + "/customer.json", "utf8", (err,data)=>{
 	//parse the file to a readable object
@@ -34,7 +49,9 @@ var calcCompound = (customer) => {
 		console.log("Welcome " + customer.name + " to our advanced pension planner!")
 		console.log("You are starting with: " + customer.finances.startcapital + " and add a monthly amount of " + customer.finances.monthlyadd)
 		console.log("When you retire at age: " + customer.pension.age + " you will have the following: ")
-		console.log("In a pessimistic scenario: $" + customer.pension.endamount.pessimistic)
-		console.log("In a pessimistic scenario: $" + customer.pension.endamount.average)
-		console.log("In a pessimistic scenario: $" + customer.pension.endamount.optimistic)
+		console.log("In a pessimistic scenario: $" + prettyNr(customer.pension.endamount.pessimistic))
+		console.log("In a average scenario: $" + prettyNr(customer.pension.endamount.average))
+		console.log("In a optimistic scenario: $" + prettyNr(customer.pension.endamount.optimistic))
 }
+
+
